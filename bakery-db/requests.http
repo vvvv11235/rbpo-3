@@ -1,0 +1,41 @@
+### 1. Создать ингредиент "Мука" (ID=1)
+POST http://localhost:8080/api/ingredients
+Content-Type: application/json
+
+{
+  "name": "Мука",
+  "unit": "кг",
+  "physicalStock": 100
+}
+
+### 2. Создать ингредиент "Сахар" (ID=2)
+POST http://localhost:8080/api/ingredients
+Content-Type: application/json
+
+{
+  "name": "Сахар",
+  "unit": "кг",
+  "physicalStock": 50
+}
+
+### 3. Создать пользователя "Иван" (ID=1)
+POST http://localhost:8080/api/users
+Content-Type: application/json
+
+{
+  "name": "Иван"
+}
+
+### 4. Создать рецепт "Хлеб" (ID=1)
+POST http://localhost:8080/api/recipes
+Content-Type: application/json
+
+{
+  "name": "Хлеб"
+}
+
+### 5. Пополнить склад для ингредиента ID=1 (Мука) на 20 кг
+POST http://localhost:8080/api/business/ingredients/1/restock?amount=20
+
+### 6. Посмотреть все ингредиенты
+GET http://localhost:8080/api/ingredients
