@@ -39,3 +39,25 @@ POST http://localhost:8080/api/business/ingredients/1/restock?amount=20
 
 ### 6. Посмотреть все ингредиенты
 GET http://localhost:8080/api/ingredients
+
+### 7. Запустить партию (БО-2)
+POST http://localhost:8080/api/business/batches/start?recipeId=1&quantity=10
+
+### 8. Создать заявку (БО-3)
+POST http://localhost:8080/api/business/requests
+Content-Type: application/json
+
+{
+  "user": { "id": 1 },
+  "recipe": { "id": 1 },
+  "quantity": 5
+}
+
+### 9. Завершить партию (БО-4)
+POST http://localhost:8080/api/business/batches/1/finish
+
+### 10. Отменить заявку (БО-5)
+POST http://localhost:8080/api/business/requests/1/cancel
+
+### 11. Отменить партию (БО-6)
+POST http://localhost:8080/api/business/batches/1/cancel

@@ -50,4 +50,9 @@ public class BusinessController {
     public ResponseEntity<BakingRequest> cancelRequest(@PathVariable Long id) {
         return ResponseEntity.ok(requestService.cancel(id));
     }
+    // 6. Отмена партии
+    @PostMapping("/batches/{id}/cancel")
+    public ResponseEntity<ProductionBatch> cancelBatch(@PathVariable Long id) {
+        return ResponseEntity.ok(batchService.cancelBatch(id));
+    }
 }

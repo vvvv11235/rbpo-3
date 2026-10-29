@@ -83,4 +83,26 @@ public class ProductionBatchService {
 
         return batchRepository.save(batch);
     }
+
+    // Бизнес-операция 6: Отмена партии (возвращает ингредиенты на склад)
+    @Transactional
+    public ProductionBatch cancelBatch(Long batchId) {
+        ProductionBatch batch = batchRepository.findById(batchId)
+                .orElseThrow(() -> new RuntimeException("Партия не найдена"));
+
+        if (!batch.getStatus().equals("IN_PROGRESS")) {
+            throw new RuntimeException("Можно отменить только партию в статусе IN_PROGRESS");
+        }
+
+        // Возвращаем ингредиенты на склад
+        for (RecipeIngredient ri : batch.getRecipe().getIngredients()) {
+            Ingredient ing = ri.getIngredient();
+            double returnAmount = ri.getAmount() * batch.getQuantity();
+            ing.setPhysicalStock(ing.getPhysicalStock() + returnAmount); // Возвращаем остаток
+            ingredientRepository.save(ing); // Сохраняем ингредиент
+        }
+
+        batch.setStatus("CANCELLED"); // Меняем статус партии
+        return batchRepository.save(batch); // Сохраняем и возвращаем партию
+    }
 }
